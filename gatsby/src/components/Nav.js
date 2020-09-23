@@ -15,6 +15,7 @@ const NavStyles = styled.nav`
     grid-gap: 2rem;
 
     margin: 0;
+    margin-top: -6rem;
     padding: 0;
     text-align: center;
 
@@ -42,6 +43,9 @@ const NavStyles = styled.nav`
     font-size: 3rem;
     text-decoration: none;
     &:hover {
+      color: var(--red);
+    }
+    &[aria-current='page'] {
       color: var(--red);
     }
   }
