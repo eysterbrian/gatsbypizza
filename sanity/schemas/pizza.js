@@ -58,7 +58,7 @@ export default {
   ],
   preview: {
     select: {
-      title: 'title',
+      title: 'name',
       media: 'image',
       topping0: 'toppings.0.name',
       topping1: 'toppings.1.name',
