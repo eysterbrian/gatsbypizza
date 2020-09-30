@@ -27,24 +27,25 @@ const ToppingsStyles = styled.div`
 
 // Return an array with all the toppings (name, id, pizza count)
 // sorted by the number of pizzas that include this topping
-function getToppingsWithPizzaCounts(pizzas) {
+function getToppingsWithPizzaCounts(toppings, pizzas) {
+  // Initialize with all the toppings
+  const toppingsWithCounts = toppings.reduce((acc, topping) => {
+    acc[topping.id] = {
+      count: 0,
+      id: topping.id,
+      name: topping.name,
+    };
+    return acc;
+  }, {});
+
   // Count how many pizzas have each topping
-  const pizzasPerToppingObj = pizzas.nodes
+  const pizzasPerToppingObj = pizzas
     .map((pizza) => pizza.toppings)
     .flat()
     .reduce((acc, topping) => {
-      // The 1st time we see a topping, create new sub-object for the topping
-      if (!acc[topping.id]) {
-        acc[topping.id] = {
-          count: 1,
-          id: topping.id,
-          name: topping.name,
-        };
-      } else {
-        acc[topping.id].count += 1;
-      }
+      acc[topping.id].count += 1;
       return acc;
-    }, {});
+    }, toppingsWithCounts);
 
   // Sort the toppings by the count of pizzas with that topping
   const sortedToppings = Object.values(pizzasPerToppingObj).sort(
@@ -76,9 +77,10 @@ export default function ToppingsFilter() {
     }
   `);
 
-  // TODO: If a topping has no pizzas, then it won't appear in this list!!!
-  const sortedToppings = getToppingsWithPizzaCounts(pizzas);
-  console.log(sortedToppings);
+  const sortedToppings = getToppingsWithPizzaCounts(
+    toppings.nodes,
+    pizzas.nodes
+  );
 
   return (
     <ToppingsStyles>
