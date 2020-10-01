@@ -1,4 +1,4 @@
-import { Link } from 'gatsby';
+import { graphql, Link } from 'gatsby';
 import Img from 'gatsby-image';
 import React from 'react';
 import styled from 'styled-components';
@@ -48,3 +48,25 @@ export default function PizzaList({ pizzas }) {
     </PizzaListStyles>
   );
 }
+
+export const PizzaListFragment = graphql`
+  fragment PizzaListFragment on SanityPizza {
+    name
+    slug {
+      current
+    }
+    id
+    price
+    toppings {
+      name
+      id
+    }
+    image {
+      asset {
+        fluid(maxWidth: 400) {
+          ...GatsbySanityImageFluid
+        }
+      }
+    }
+  }
+`;

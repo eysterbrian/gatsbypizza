@@ -1,6 +1,6 @@
 import { graphql } from 'gatsby';
 import React from 'react';
-import PizzaList from '../components/PizzaList';
+import PizzaList, { PizzaListFragment } from '../components/PizzaList';
 import ToppingsFilter from '../components/ToppingsFilter';
 
 export default function PizzasPage({ data }) {
@@ -17,23 +17,7 @@ export const query = graphql`
   query PizzaQuery {
     pizzas: allSanityPizza {
       nodes {
-        name
-        slug {
-          current
-        }
-        id
-        price
-        toppings {
-          name
-          id
-        }
-        image {
-          asset {
-            fluid(maxWidth: 400) {
-              ...GatsbySanityImageFluid
-            }
-          }
-        }
+        ...PizzaListFragment
       }
     }
   }
