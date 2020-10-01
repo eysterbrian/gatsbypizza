@@ -1,4 +1,5 @@
 import path from 'path'; // Built-in Node API
+import fetch from 'isomorphic-fetch';
 
 async function createPizzaPages({ graphql, actions }) {
   // Query just enough info to know which pages to generate.
@@ -25,7 +26,6 @@ async function createPizzaPages({ graphql, actions }) {
         slug: pizza.slug.current, // $slug is used as variable in page query
       },
     });
-    console.log(`Creating page for ${pizza.slug.current}`);
   });
 }
 
@@ -49,8 +49,35 @@ async function createToppingPages({ graphql, actions }) {
         toppingName: topping.name,
       },
     });
-    console.log(`Creating topping page for: ${topping.name}`);
   });
+}
+
+// Note that 'actions' are all the actions bound into Gatsby's internal Redux store
+async function sourceBeers({ actions, createNodeId, createContentDigest }) {
+  console.log('=== Fetching  beers');
+
+  const res = await fetch('https://sampleapis.com/beers/api/ale');
+  const beers = await res.json();
+
+  beers.forEach((beer) => {
+    const nodeMeta = {
+      id: createNodeId(`beer-${beer.name}`),
+      parent: null,
+      children: [],
+      internal: {
+        type: 'Beer', // Used for GraphQL type and top-level queries like 'allBeer' and 'beer'
+        mediaType: 'application/json',
+        contentDigest: createContentDigest(beer), // Gatsby's cache mechanism
+      },
+    };
+
+    // Call the action on the Gatsby redux store to create/add the node
+    actions.createNode({ ...beer, ...nodeMeta });
+  });
+}
+
+export async function sourceNodes(params) {
+  await sourceBeers(params);
 }
 
 // TODO: Create pages for slicemasters
