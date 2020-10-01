@@ -29,10 +29,34 @@ async function createPizzaPages({ graphql, actions }) {
   });
 }
 
-// TODO: Create pages for toppings
+async function createToppingPages({ graphql, actions }) {
+  const { data } = await graphql(`
+    query {
+      toppings: allSanityTopping {
+        nodes {
+          name
+        }
+      }
+    }
+  `);
+
+  const toppingTemplate = path.resolve('./src/templates/Topping.js');
+  data.toppings.nodes.forEach((topping) => {
+    actions.createPage({
+      path: `/topping/${topping.name}`,
+      component: toppingTemplate,
+      context: {
+        toppingName: topping.name,
+      },
+    });
+    console.log(`Creating topping page for: ${topping.name}`);
+  });
+}
+
 // TODO: Create pages for slicemasters
 
 export async function createPages(params) {
   console.log(' **** Calling createPages');
   await createPizzaPages(params);
+  await createToppingPages(params);
 }
