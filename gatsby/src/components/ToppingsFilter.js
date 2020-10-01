@@ -19,7 +19,9 @@ const ToppingsStyles = styled.div`
       background: white;
       padding: 2px 5px;
     }
-    &.active {
+    &.active,
+    /* Gatsby automatically adds this aria attribute on links that match our URL */
+    &[aria-current='page'] {
       background: var(--yellow);
     }
   }
@@ -84,6 +86,10 @@ export default function ToppingsFilter({ active = '' }) {
 
   return (
     <ToppingsStyles>
+      <Link to="/pizzas">
+        <span className="name">All</span>
+        <span className="count">{pizzas.nodes.length}</span>
+      </Link>
       {sortedToppings.map((topping) => (
         <Link
           key={topping.id}
