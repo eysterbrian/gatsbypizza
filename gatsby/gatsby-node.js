@@ -57,6 +57,9 @@ async function createToppingPages({ graphql, actions }) {
 
 export async function createPages(params) {
   console.log(' **** Calling createPages');
-  await createPizzaPages(params);
-  await createToppingPages(params);
+
+  // Both these createXXXPages methods are async, but they're independent of each other,
+  // so we can run them concurrently!!
+  // Make sure to await this!!
+  await Promise.all([createPizzaPages(params), createToppingPages(params)]);
 }
