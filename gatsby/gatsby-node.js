@@ -95,7 +95,7 @@ async function createSliceMasterPages({ graphql, actions }) {
       component: path.resolve('./src/pages/slicemasters.js'),
       context: {
         skip: idx * pageSize,
-        pageNum: idx + 1,
+        currentPage: idx + 1,
         pageSize,
       },
     });
