@@ -52,6 +52,56 @@ async function createToppingPages({ graphql, actions }) {
   });
 }
 
+async function createSliceMasterPages({ graphql, actions }) {
+  const { data } = await graphql(`
+    query {
+      sliceMasters: allSanityPerson {
+        totalCount
+        nodes {
+          id
+          slug {
+            current
+          }
+        }
+      }
+    }
+  `);
+
+  // Create a page for each individual slicemaster
+  console.log(' -=-= Creating SliceMaster pages...');
+  const sliceMasterTemplate = path.resolve('./src/templates/SliceMaster.js');
+  data.sliceMasters.nodes.forEach((person) => {
+    actions.createPage({
+      path: `/slicemaster/${person.slug.current}`,
+      component: sliceMasterTemplate,
+      context: {
+        personId: person.id,
+      },
+    });
+  });
+
+  // Now create the sliceMaster index pages
+  const pageSize = parseInt(process.env.GATSBY_ITEMS_PER_PAGE);
+  const numPages = Math.ceil(data.sliceMasters.totalCount / pageSize);
+  console.log(
+    `We have ${data.sliceMasters.totalCount} slicemasters, yielding ${numPages} pages w ${pageSize} per page`
+  );
+
+  // Instead of a for-loop from 0-to-numPages we'll use this functional Javascript approach:
+  Array.from({ length: numPages }).forEach((_, idx) => {
+    console.log(`Creating slicemaster page #${idx + 1}`);
+    actions.createPage({
+      path: `/slicemasters/${idx + 1}`,
+      component: path.resolve('./src/pages/slicemasters.js'),
+      context: {
+        skip: idx * pageSize,
+        pageNum: idx + 1,
+        pageSize,
+      },
+    });
+  });
+}
+
 // Note that 'actions' are all the actions bound into Gatsby's internal Redux store
 async function sourceBeers({ actions, createNodeId, createContentDigest }) {
   console.log('=== Fetching  beers');
@@ -80,13 +130,15 @@ export async function sourceNodes(params) {
   await sourceBeers(params);
 }
 
-// TODO: Create pages for slicemasters
-
 export async function createPages(params) {
   console.log(' **** Calling createPages');
 
   // Both these createXXXPages methods are async, but they're independent of each other,
   // so we can run them concurrently!!
   // Make sure to await this!!
-  await Promise.all([createPizzaPages(params), createToppingPages(params)]);
+  await Promise.all([
+    createPizzaPages(params),
+    createToppingPages(params),
+    createSliceMasterPages(params),
+  ]);
 }
