@@ -68,7 +68,7 @@ export default function SliceMastersPage({ data, pageContext }) {
 // Receives $skip, $pageNum and $pageSize from Actions.createPage(
 // Note that the default value for $pageSize is set to a fixed value insted of the value set in process.env
 export const query = graphql`
-  query SlicemastersQuery($skip: Int = 0, $pageSize: Int = 4) {
+  query SlicemastersQuery($skip: Int = 0, $pageSize: Int = 2) {
     slicemasters: allSanityPerson(skip: $skip, limit: $pageSize) {
       totalCount
       nodes {
