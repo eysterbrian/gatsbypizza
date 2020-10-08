@@ -60,7 +60,9 @@ export default function Pagination({
         ← Previous
       </Link>
       {Array.from({ length: totalPages }).map((_, idx) => (
-        <Link to={getPageUrl(idx + 1)}>{idx + 1}</Link>
+        <Link key={idx} to={getPageUrl(idx + 1)}>
+          {idx + 1}
+        </Link>
       ))}
       <Link disabled={!hasNextPage} to={getPageUrl(nextPageNum)}>
         Next →
