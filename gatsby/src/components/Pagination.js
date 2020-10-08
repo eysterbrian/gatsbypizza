@@ -1,5 +1,34 @@
 import { Link } from 'gatsby';
 import React from 'react';
+import styled from 'styled-components';
+
+const PaginationStyles = styled.div`
+  display: flex;
+  flex-direction: row;
+  gap: 1rem;
+  justify-content: space-between;
+  margin-bottom: 2rem;
+  text-align: center;
+  align-items: center;
+  border-radius: 5px;
+  border: 1px solid var(--grey);
+  & > * {
+    flex-grow: 1;
+    padding: 1rem;
+    border-right: 1px solid var(--grey);
+    text-decoration: none;
+
+    &.current,
+    &[aria-current='page'] {
+      color: var(--red);
+    }
+
+    &[disabled] {
+      color: var(--grey);
+      pointer-events: none;
+    }
+  }
+`;
 
 export default function Pagination({
   baseUrl,
@@ -26,7 +55,7 @@ export default function Pagination({
   }
 
   return (
-    <div>
+    <PaginationStyles>
       <Link disabled={!hasPrevPage} to={getPageUrl(prevPageNum)}>
         ← Previous
       </Link>
@@ -36,6 +65,6 @@ export default function Pagination({
       <Link disabled={!hasNextPage} to={getPageUrl(nextPageNum)}>
         Next →
       </Link>
-    </div>
+    </PaginationStyles>
   );
 }
