@@ -5,10 +5,13 @@ dotenv.config({ path: '.env' }); // This might be the default, but make it expli
 export default {
   siteMetadata: {
     title: "Slick's Slices",
+    titleTemplate: '%s - Slicks Slices',
     description: "Lyons' finest pizza shack",
+    twitterUsername: '@slicksslices',
   },
   plugins: [
     'gatsby-plugin-styled-components',
+    'gatsby-plugin-react-helmet',
     {
       resolve: 'gatsby-source-sanity',
       options: {
