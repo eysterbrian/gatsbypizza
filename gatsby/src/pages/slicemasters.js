@@ -3,6 +3,7 @@ import React from 'react';
 import styled from 'styled-components';
 import Img from 'gatsby-image';
 import Pagination from '../components/Pagination';
+import SEO from '../components/SEO';
 
 const SliceMasterGridStyles = styled.div`
   display: grid;
@@ -42,6 +43,7 @@ export default function SliceMastersPage({ data, pageContext }) {
   console.log(data.slicemasters);
   return (
     <>
+      <SEO title={`Slicemasters - page ${pageContext.currentPage || 1}`} />
       <Pagination
         baseUrl="/slicemasters"
         currentPage={pageContext.currentPage || 1}
