@@ -2,6 +2,8 @@ import { graphql } from 'gatsby';
 import Img from 'gatsby-image';
 import React from 'react';
 import SEO from '../components/SEO';
+import calcPizzaPrice from '../utils/calcPizzaPrice';
+import formatMoney from '../utils/formatMoney';
 import useForm from '../utils/useForm';
 
 export default function OrderPage({ data }) {
@@ -47,9 +49,11 @@ export default function OrderPage({ data }) {
               />
               <div>
                 <h2>{pizza.name}</h2>
-                <ul>
-                  <li>Prices</li>
-                </ul>
+                </div>
+                <div>
+                  {['S', 'M', 'L'].map(size => (
+                    <button key={size}>{size} { formatMoney(calcPizzaPrice(pizza.price, size)) }</button>
+                  ))}
               </div>
             </div>
           ))}
