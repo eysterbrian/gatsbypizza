@@ -9,16 +9,18 @@ import formatMoney from '../utils/formatMoney';
 import useForm from '../utils/useForm';
 import useOrder from '../utils/useOrder';
 import { MenuItemStyles } from '../components/MenuItemStyles';
+import calcOrderTotal from '../utils/calcOrderTotal';
 
 const OrderFormStyles = styled.form`
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 20px;
   fieldset {
-    &.customer {
+    display: grid;
+    &.customer,
+    &.total {
       grid-column: span 2;
     }
-    display: grid;
     .order,
     .menu {
       max-height: 600px;
@@ -69,7 +71,7 @@ export default function OrderPage({ data }) {
             onChange={updateHandler}
           />
         </fieldset>
-        <fieldset className="menu">
+        <fieldset>
           <legend>Menu</legend>
           <div className="menu">
             {pizzas.map((pizza) => (
@@ -101,7 +103,7 @@ export default function OrderPage({ data }) {
             ))}
           </div>
         </fieldset>
-        <fieldset className="order">
+        <fieldset>
           <legend>Order</legend>
           <div className="order">
             <PizzaOrder
@@ -112,7 +114,9 @@ export default function OrderPage({ data }) {
           </div>
         </fieldset>
         <fieldset className="total">
-          <h2>Your order total is total</h2>
+          <h2>
+            Your order total is {formatMoney(calcOrderTotal(order, pizzas))}
+          </h2>
           <button type="submit">Order Ahead</button>
         </fieldset>
       </OrderFormStyles>
