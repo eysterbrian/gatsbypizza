@@ -43,15 +43,27 @@ export default function OrderPage({ data }) {
     name: '',
   });
 
-  const { order, addToOrder, removeIdxFromOrder } = useOrder({
+  const {
+    order,
+    addToOrder,
+    removeIdxFromOrder,
+    error,
+    loading,
+    message,
+    submitOrder,
+  } = useOrder({
     pizzas,
-    inputs: {},
+    customer: values,
   });
+
+  if (message) {
+    return <p>{message}</p>;
+  }
 
   return (
     <>
       <SEO title="Order a Pizza" />
-      <OrderFormStyles>
+      <OrderFormStyles onSubmit={submitOrder}>
         <fieldset className="customer">
           <legend>Your Info</legend>
           <label htmlFor="name">Name</label>
@@ -117,7 +129,10 @@ export default function OrderPage({ data }) {
           <h2>
             Your order total is {formatMoney(calcOrderTotal(order, pizzas))}
           </h2>
-          <button type="submit">Order Ahead</button>
+          <div>{error && <p>{error.message}</p>}</div>
+          <button type="submit" disabled={loading}>
+            {loading ? 'Placing order...' : 'Order Ahead'}
+          </button>
         </fieldset>
       </OrderFormStyles>
     </>
