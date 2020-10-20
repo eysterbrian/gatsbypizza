@@ -1,3 +1,4 @@
+const { withAssetPrefix } = require('gatsby');
 const nodemailer = require('nodemailer');
 
 // Create a transport for nodemailer
@@ -33,10 +34,19 @@ function generateOrderEmail(order, total) {
   </div>`;
 }
 
+// Delay the processing for some number of milliseconds
+function wait(ms = 0) {
+  return new Promise((resolve) => {
+    setTimeout(resolve, ms);
+  });
+}
+
 //
 // Netlify function for placing the order
 //
 exports.handler = async (event, context) => {
+  await wait(2000);
+
   const body = JSON.parse(event.body);
   console.log(body);
 
