@@ -1,4 +1,3 @@
-const { withAssetPrefix } = require('gatsby');
 const nodemailer = require('nodemailer');
 const mjml2html = require('mjml');
 
@@ -12,6 +11,11 @@ const transporter = nodemailer.createTransport({
   },
 });
 
+/**
+ * Creates the raw HTML for the order email
+ * @param {Object} order object
+ * @param {string} total as a formatted string
+ */
 function generateOrderEmail(order, total) {
   console.log('Inside generateOrder...');
 
@@ -57,16 +61,24 @@ function generateOrderEmail(order, total) {
   return html;
 }
 
-// Delay the processing for some number of milliseconds
+/**
+ * Returns a Promise that resolves after ms milliseconds
+ * Can be used with async/await to pause program execution to view intermediate states
+ *
+ * @param {number} ms time until the Promise resolves
+ */
 function wait(ms = 0) {
   return new Promise((resolve) => {
     setTimeout(resolve, ms);
   });
 }
 
-//
-// Netlify function for placing the order
-//
+/**
+ * Netlify function which places an order by sending an email
+ *
+ * @param {*} event request object
+ * @param {*} context current state of this function
+ */
 exports.handler = async (event, context) => {
   await wait(2000);
 
