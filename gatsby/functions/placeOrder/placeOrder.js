@@ -1,5 +1,6 @@
 const { withAssetPrefix } = require('gatsby');
 const nodemailer = require('nodemailer');
+const mjml2html = require('mjml');
 
 // Create a transport for nodemailer
 const transporter = nodemailer.createTransport({
@@ -12,26 +13,48 @@ const transporter = nodemailer.createTransport({
 });
 
 function generateOrderEmail(order, total) {
-  return `<div>
-    <h2>Your recent order for ${total}</h2>
-    <p>We'll have your order ready in the next 20 minutes!</p>
-    <ul>
-    ${order
-      .map(
-        (item) => `<li> 
-      <img src="${item.thumbnail}" alt="${item.name}">
-      ${item.size} ${item.name} - ${item.price}
-    </li>`
-      )
-      .join('')}
-    </ul>
-    <p>Your order total of <strong>${total}</strong> is due at pickup </p>
-    <style>
-      ul {
-        list-style: none;
-      }
-    </style>
-  </div>`;
+  console.log('Inside generateOrder...');
+
+  // Destructure the return value which is MJMLParseResults object
+  const { html, errors } = mjml2html(`
+  <mjml>
+  <mj-head>
+    <mj-title>Your Order from Slick's Slices</mj-title>
+  </mj-head>
+  <mj-body background-color="white">
+    <mj-section>
+      <mj-column>
+        <mj-text font-size="20px">Your recent order for ${total}</mj-text>
+        <mj-text>We'll have your order ready in the next 20 minutes!</mj-text>
+      </mj-column>
+    </mj-section>
+    <mj-section>
+      <mj-column>
+        <mj-table>
+          ${order
+            .map(
+              (item) => `<tr>
+            <td><img src="${item.thumbnail}" alt="${item.name}"></td>
+            <td>${item.size} ${item.name} - ${item.price}</td>
+          </tr>`
+            )
+            .join('')}
+        </mj-table>
+      </mj-column>
+    </mj-section>
+    <mj-section>
+      <mj-column>
+        <mj-text>Your order total of <strong>${total}</strong> is due at pickup </mj-text>
+      </mj-column>
+    </mj-section>
+  </mj-body>
+</mjml>
+  `);
+
+  if (errors) {
+    console.log(errors.formattedMessage);
+  }
+  return html;
 }
 
 // Delay the processing for some number of milliseconds
