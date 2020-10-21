@@ -12,13 +12,12 @@
     <mj-section>
       <mj-column>
         <mj-table>
-        <%- order.map(
-          (item) => `<tr>
-            <td><img src="${item.thumbnail}" alt="${item.name}"></td>
-            <td>${item.size} ${item.name} - ${item.price}</td>
-          </tr>`
-          )
-          .join('') %>
+        <% for (const item of order) { %>
+          <tr>
+            <td><img src="<%= item.thumbnail %>" alt="<%= item.name %>"></td>
+            <td><%= item.name%> (size <%= item.size %>) - <%= item.price %></td>
+          </tr>
+          <% } %>
         </mj-table>
       </mj-column>
     </mj-section>
