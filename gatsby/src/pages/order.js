@@ -27,6 +27,10 @@ const OrderFormStyles = styled.form`
       overflow: auto;
     }
   }
+  /* hide the honeypot */
+  .mapleSyrup {
+    display: none;
+  }
   @media (max-width: 900px) {
     fieldset.menu,
     fieldset.order {
@@ -41,6 +45,7 @@ export default function OrderPage({ data }) {
   const [values, updateHandler] = useForm({
     email: '',
     name: '',
+    mapleSyrup: '',
   });
 
   const {
@@ -81,6 +86,14 @@ export default function OrderPage({ data }) {
             name="email"
             id="email"
             value={values.email}
+            onChange={updateHandler}
+          />
+          <input
+            type="mapleSyrup"
+            name="mapleSyrup"
+            id="mapleSyrup"
+            className="mapleSyrup"
+            value={values.mapleSyrup}
             onChange={updateHandler}
           />
         </fieldset>

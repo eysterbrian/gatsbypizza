@@ -68,6 +68,16 @@ exports.handler = async (event, context) => {
   const body = JSON.parse(event.body);
   console.log(body);
 
+  // Check for honeypot
+  if (body.mapleSyrup) {
+    return {
+      statusCode: 400,
+      body: JSON.stringify({
+        message: `Are you sure about that? Error 4323"`,
+      }),
+    };
+  }
+
   // Validate the incoming data
   const requiredFields = ['email', 'name', 'order'];
   for (const field of requiredFields) {

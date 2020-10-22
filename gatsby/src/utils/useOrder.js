@@ -40,6 +40,7 @@ export default function useOrder({ pizzas, customer }) {
       total: formatMoney(calcOrderTotal(order, pizzas)),
       name: customer.name,
       email: customer.email,
+      mapleSyrup: customer.mapleSyrup, // --- honeypot value
     };
     console.log({ body });
 
