@@ -56,6 +56,7 @@ export default function OrderPage({ data }) {
     customer: values,
   });
 
+  // If order is successful then just show the message without the form
   if (message) {
     return <p>{message}</p>;
   }
@@ -64,7 +65,7 @@ export default function OrderPage({ data }) {
     <>
       <SEO title="Order a Pizza" />
       <OrderFormStyles onSubmit={submitOrder}>
-        <fieldset className="customer">
+        <fieldset className="customer" disabled={loading}>
           <legend>Your Info</legend>
           <label htmlFor="name">Name</label>
           <input
@@ -83,7 +84,7 @@ export default function OrderPage({ data }) {
             onChange={updateHandler}
           />
         </fieldset>
-        <fieldset>
+        <fieldset disabled={loading}>
           <legend>Menu</legend>
           <div className="menu">
             {pizzas.map((pizza) => (
@@ -115,7 +116,7 @@ export default function OrderPage({ data }) {
             ))}
           </div>
         </fieldset>
-        <fieldset>
+        <fieldset disabled={loading}>
           <legend>Order</legend>
           <div className="order">
             <PizzaOrder
@@ -125,11 +126,11 @@ export default function OrderPage({ data }) {
             />
           </div>
         </fieldset>
-        <fieldset className="total">
+        <fieldset className="total" disabled={loading}>
           <h2>
             Your order total is {formatMoney(calcOrderTotal(order, pizzas))}
           </h2>
-          <div>{error && <p>{error.message}</p>}</div>
+          <div>{error && <p>{error}</p>}</div>
           <button type="submit" disabled={loading}>
             {loading ? 'Placing order...' : 'Order Ahead'}
           </button>
