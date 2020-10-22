@@ -5,7 +5,14 @@ import attachNamesAndPrices from './attachNamesAndPrices';
 import calcOrderTotal from './calcOrderTotal';
 import formatMoney from './formatMoney';
 
+/**
+ * Hook for managing items in an order and submitting the order to the API
+ *
+ * @param {*} param0 { pizzas, customer }
+ * @returns {order, addToOrder, removeIdxFromOrder, error, loading, message, submitOrder }
+ */
 export default function useOrder({ pizzas, customer }) {
+  // Keep the order object in a react provider
   const [order, setOrder] = useContext(OrderContext);
   const [error, setError] = useState();
   const [loading, setLoading] = useState(false);
@@ -18,7 +25,10 @@ export default function useOrder({ pizzas, customer }) {
     setOrder(order.filter((_, idx) => idx !== orderIdx));
   }
 
-  // Run with user submits the form
+  /**
+   * When user submits the form, call our API
+   * @param {*} evt
+   */
   async function submitOrder(evt) {
     evt.preventDefault();
     setLoading(true);
@@ -46,20 +56,25 @@ export default function useOrder({ pizzas, customer }) {
         }
       );
 
-      const text = await JSON.parse(res.text());
+      const text = await res.json();
+      console.log(text);
 
       if (res.status >= 400 && res.status < 600) {
         setError(text.message);
+        console.log(`Error: ${error}`);
       } else {
+        // Success!!
         setMessage('Come on down to pickup your delicious pizza!');
       }
     } catch (err) {
       setError(err);
     } finally {
+      // Regardless of error/success, make sure to turn off loading flag
       setLoading(false);
     }
   }
 
+  // useOrder return values
   return {
     order,
     addToOrder,
