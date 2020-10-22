@@ -63,7 +63,7 @@ function wait(ms = 0) {
  * @param {*} context current state of this function
  */
 exports.handler = async (event, context) => {
-  await wait(2000);
+  // await wait(2000);
 
   const body = JSON.parse(event.body);
   console.log(body);
@@ -79,6 +79,16 @@ exports.handler = async (event, context) => {
         }),
       };
     }
+  }
+
+  // Make sure the order isn't empty
+  if (body.order.length === 0) {
+    return {
+      statusCode: 400,
+      body: JSON.stringify({
+        message: `Hmmm, your order appears to be empty.  Please add some food!`,
+      }),
+    };
   }
 
   // send the email
