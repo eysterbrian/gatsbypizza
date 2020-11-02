@@ -28,10 +28,26 @@ export default function useStoreSettings() {
               slicemaster {
                 name
                 _id
+                image {
+                  asset {
+                    url
+                    metadata {
+                      lqip
+                    }
+                  }
+                }
               }
               hotSlices {
                 name
                 _id
+                image {
+                  asset {
+                    url
+                    metadata {
+                      lqip
+                    }
+                  }
+                }
               }
             }
           }
@@ -51,6 +67,9 @@ export default function useStoreSettings() {
         // since we won't yet have run setHotSlices
         setSlicemasters(res.data.StoreSettings.slicemaster);
         setHotSlices(res.data.StoreSettings.hotSlices);
+      })
+      .catch((err) => {
+        console.log('ERROR!', err);
       });
   }, []);
 
