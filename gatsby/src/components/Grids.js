@@ -1,12 +1,12 @@
 import styled from 'styled-components';
 
-export const HomepageGrids = styled.div`
+export const HomepageGridStyles = styled.div`
   display: grid;
   gap: 2rem;
   grid-template-columns: repeat(2, minmax(auto, 1fr));
 `;
 
-export const ItemsGrid = styled.div`
+export const ItemsGridStyles = styled.div`
   display: grid;
   gap: 2rem;
   grid-template-columns: 1fr 1fr;
@@ -21,7 +21,7 @@ export const SingleItemStyles = styled.div`
   }
   p {
     position: absolute;
-    transform: rotate(-2deg) translateY(-50%);
+    transform: rotate(-2deg) translateY(-140%);
     width: 100%;
 
     .mark {

@@ -1,13 +1,14 @@
 import React from 'react';
-import { ItemsGrid, SingleItemStyles } from './Grids';
+import { ItemsGridStyles, SingleItemStyles } from './Grids';
 
 /**
  * Create a grid of empty cells including a spacer image and an animated
  * loading background.
+ * @param {*} param0
  */
 export default function LoadingGrid({ count = 4 }) {
   return (
-    <ItemsGrid>
+    <ItemsGridStyles>
       {Array.from({ length: count }, (_, idx) => (
         <SingleItemStyles key={idx}>
           <p>
@@ -22,6 +23,6 @@ export default function LoadingGrid({ count = 4 }) {
           />
         </SingleItemStyles>
       ))}
-    </ItemsGrid>
+    </ItemsGridStyles>
   );
 }
