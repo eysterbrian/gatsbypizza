@@ -1,5 +1,9 @@
 import { useEffect, useState } from 'react';
 
+// Rather than import the real gql, we just define it to return the string here
+// so that VSCode will do code formatting on gql`` strings
+const gql = String.raw;
+
 export default function useStoreSettings() {
   // hot slices
   const [hotSlices, setHotSlices] = useState();
@@ -15,20 +19,22 @@ export default function useStoreSettings() {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
-        query: `
-        query {
-	StoreSettings(id: "MainStore") {
-    storeName
-    slicemaster {
-      name
-      _id
-    }
-    hotSlices {
-      name
-      _id
-    }
-  }
-}        
+        // NOTE that this is a fake 'gql' that just returns the string.
+        // We're doing this to trick VSCode into giving us gql code formatting
+        query: gql`
+          query {
+            StoreSettings(id: "MainStore") {
+              storeName
+              slicemaster {
+                name
+                _id
+              }
+              hotSlices {
+                name
+                _id
+              }
+            }
+          }
         `,
       }),
     })
