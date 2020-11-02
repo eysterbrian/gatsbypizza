@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 
-export default function useLatestData() {
+export default function useStoreSettings() {
   // hot slices
   const [hotSlices, setHotSlices] = useState();
   // slicemasters

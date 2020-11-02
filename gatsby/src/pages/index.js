@@ -1,7 +1,7 @@
 import React from 'react';
 import { HomepageGrids, ItemsGrid } from '../components/Grids';
 import LoadingGrid from '../components/LoadingGrid';
-import useLatestData from '../utils/useLatestData';
+import useStoreSettings from '../utils/useStoreSettings';
 
 function CurrentlySlicing({ slicemasters }) {
   console.log(slicemasters);
@@ -37,7 +37,7 @@ function HotSlices({ hotSlices }) {
 }
 
 export default function HomePage() {
-  const { hotSlices, slicemasters } = useLatestData();
+  const { hotSlices, slicemasters } = useStoreSettings();
 
   console.log({ hotSlices, slicemasters });
 
