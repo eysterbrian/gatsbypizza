@@ -33,6 +33,10 @@ export default function useLatestData() {
       }),
     })
       .then((res) => res.json())
+      // Insert a pause here before resolving this intermediate promise
+      .then(
+        (res) => new Promise((resolve) => setTimeout(() => resolve(res), 3000))
+      )
       .then((res) => {
         // Check for errors
 
