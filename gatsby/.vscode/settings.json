@@ -23,4 +23,8 @@
     "javascript",
     "javascriptreact"
   ],
+  "search.exclude": {
+    ".cache/**": true,
+    "public/**": true
+  },
 }
