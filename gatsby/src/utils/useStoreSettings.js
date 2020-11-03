@@ -57,7 +57,7 @@ export default function useStoreSettings() {
       .then((res) => res.json())
       // Insert a pause here before resolving this intermediate promise
       .then(
-        (res) => new Promise((resolve) => setTimeout(() => resolve(res), 3000))
+        (res) => new Promise((resolve) => setTimeout(() => resolve(res), 500))
       )
       .then((res) => {
         // Check for errors
