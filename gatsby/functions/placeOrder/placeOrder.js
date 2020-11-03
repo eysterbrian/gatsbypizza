@@ -19,8 +19,6 @@ const transporter = nodemailer.createTransport({
  * @param {string} total as a formatted string
  */
 function generateOrderEmail(order, total) {
-  console.log('Inside generateOrder...');
-
   let mjmlTemplate;
   try {
     const data = fs.readFileSync(require.resolve('./email.mjml'));

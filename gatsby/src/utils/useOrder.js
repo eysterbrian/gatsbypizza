@@ -42,7 +42,6 @@ export default function useOrder({ pizzas, customer }) {
       email: customer.email,
       mapleSyrup: customer.mapleSyrup, // --- honeypot value
     };
-    console.log({ body });
 
     // Send this data to the serverless fn when they checkout
     try {
@@ -58,7 +57,6 @@ export default function useOrder({ pizzas, customer }) {
       );
 
       const text = await res.json();
-      console.log(text);
 
       if (res.status >= 400 && res.status < 600) {
         setError(text.message);

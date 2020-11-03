@@ -89,7 +89,6 @@ async function createSliceMasterPages({ graphql, actions }) {
 
   // Instead of a for-loop from 0-to-numPages we'll use this functional Javascript approach:
   Array.from({ length: numPages }).forEach((_, idx) => {
-    console.log(`Creating slicemaster page #${idx + 1}`);
     actions.createPage({
       path: `/slicemasters/${idx + 1}`,
       component: path.resolve('./src/pages/slicemasters.js'),

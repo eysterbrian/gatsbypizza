@@ -5,7 +5,6 @@ import LoadingGrid from '../components/LoadingGrid';
 import useStoreSettings from '../utils/useStoreSettings';
 
 function CurrentlySlicing({ slicemasters }) {
-  console.log(slicemasters);
   return (
     <div>
       <h2 className="tilt mark">SliceMasters on duty</h2>
@@ -31,8 +30,6 @@ function HotSlices({ hotSlices }) {
 
 export default function HomePage() {
   const { hotSlices, slicemasters } = useStoreSettings();
-
-  console.log({ hotSlices, slicemasters });
 
   return (
     <div className="center">
