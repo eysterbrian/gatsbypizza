@@ -1,5 +1,5 @@
 import React from 'react';
-import { HomepageGridStyles, ItemsGridStyles } from '../components/Grids';
+import { HomepageGridStyles } from '../components/Grids';
 import ItemGrid from '../components/ItemGrid';
 import LoadingGrid from '../components/LoadingGrid';
 import useStoreSettings from '../utils/useStoreSettings';
@@ -20,7 +20,7 @@ function HotSlices({ hotSlices }) {
   return (
     <div>
       <h2 className="mark tilt">Hot out of the oven!</h2>
-      <p>Come on and buy 'em by the slice</p>
+      <p>Buy 'em by the slice</p>
       {!hotSlices && <LoadingGrid count={4} />}
       {hotSlices && !hotSlices.length && <p>Nothin' in the case</p>}
       {hotSlices?.length && <ItemGrid items={hotSlices} />}
@@ -33,7 +33,7 @@ export default function HomePage() {
 
   return (
     <div className="center">
-      <h1>The best pizza around!</h1>
+      <h1>The best pizza in town!</h1>
       <p>Open every day from 11am-11pm</p>
       <HomepageGridStyles>
         <CurrentlySlicing slicemasters={slicemasters} />
