@@ -28,6 +28,9 @@ export default function useStoreSettings() {
               slicemaster {
                 name
                 _id
+                slug {
+                  current
+                }
                 image {
                   asset {
                     url
